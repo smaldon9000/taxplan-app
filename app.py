@@ -47,3 +47,28 @@ def tx_franchise_tax(revenue, assets, payroll, year=2025, method="EZ"):
     margin_payroll = payroll
     
     margin = max(margin_68, margin_assets
+    margin, margin_assets, margin_payroll)
+    
+    tax_due = margin * config["tx_rates"]["franchise_full"]
+    return round(max(0, tax_due), 2)
+
+# Sidebar Auth
+def sidebar_auth():
+    st.sidebar.title("🔐 Login")
+    username = st.sidebar.text_input("User", key="username")
+    password = st.sidebar.text_input("Password", type="password
+    if st.sidebar.button("Login"):
+        if authenticator.login(username, password):
+            st.sidebar.success("✅ Logged in")
+            st.session_state.authenticated = True
+        else:
+            st.sidebar.error("❌ Invalid")
+    
+    return st.session_state.get('authenticated', False)
+
+# Main Pages
+def main_page():
+    config = load_config()
+    st.title(f"🧾 {config['title']} - {config['version']}")
+    
+    col1, col2 = st.columns(
