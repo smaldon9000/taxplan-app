@@ -35,3 +35,15 @@ def load_config():
 def tx_franchise_tax(revenue, assets, payroll, year=2025, method="EZ"):
     """Texas Franchise Tax per TGHC/GAWR/FlareAI docs"""
     if revenue < 1250000:  # No
+    return 0
+    
+    # EZ Method (revenue * 0.3315%)
+    if method == "EZ" and revenue <= 2083333:  # $2.083M threshold
+        return max(0, revenue * config["tx_rates"]["franchise_ez"])
+    
+    # Full calculation (68% total revenue OR margin)
+    margin_68 = revenue * 0.68
+    margin_assets = assets
+    margin_payroll = payroll
+    
+    margin = max(margin_68, margin_assets
